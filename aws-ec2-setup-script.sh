@@ -86,8 +86,7 @@ echo Enable Apache modules
 sudo a2enmod expires
 sudo a2enmod headers
 sudo a2enmod mod_mono
-#sudo a2enmod modsecurity 
-#sudo a2enmod mod-security
+sudo a2enmod security2
 sudo a2enmod rewrite
 sudo a2enmod ssl
 ####################################################
@@ -97,7 +96,7 @@ sudo a2enmod ssl
 echo Edit Apache config
 sudo sed -i 's/^ServerSignature.*/ServerSignature Off/' /etc/apache2/apache2.conf
 sudo sed -i 's/^ServerTokens.*/ServerTokens Prod/' /etc/apache2/apache2.conf
-sudo sed -i 's/Options Indexes/Options -Indexes/g' /etc/apache2/apache2.conf
+sudo sed -i 's/Options Indexes FollowSymLinks/Options -Indexes +FollowSymLinks/g' /etc/apache2/apache2.conf
 
 echo ServerSignature Off | sudo tee -a /etc/apache2/apache2.conf
 echo ServerTokens Prod | sudo tee -a /etc/apache2/apache2.conf
@@ -147,7 +146,8 @@ echo LogFile = apache2/*combined.log | sudo tee -a /etc/logwatch/conf/logfiles/h
 
 ####################################################
 echo Configure Modsecurity
-sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
+#Conf is found here /etc/apache2/mods-available/security2.conf and references the *conf in the modsecurity folder
+sudo sed -i 's/^SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/modsecurity/modsecurity.conf-recommended 
 ####################################################
 
 
