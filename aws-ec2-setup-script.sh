@@ -94,12 +94,26 @@ sudo a2enmod ssl
 
 ####################################################
 echo Edit Apache config
-sudo sed -i 's/^ServerSignature.*/ServerSignature Off/' /etc/apache2/apache2.conf
-sudo sed -i 's/^ServerTokens.*/ServerTokens Prod/' /etc/apache2/apache2.conf
-sudo sed -i 's/Options Indexes FollowSymLinks/Options -Indexes +FollowSymLinks/g' /etc/apache2/apache2.conf
 
-echo ServerSignature Off | sudo tee -a /etc/apache2/apache2.conf
-echo ServerTokens Prod | sudo tee -a /etc/apache2/apache2.conf
+if grep -Fxq "ServerSignature" /etc/apache2/apache2.conf
+then
+    # code if found
+    sudo sed -i 's/^ServerSignature.*/ServerSignature Off/' /etc/apache2/apache2.conf
+else
+    # code if not found
+    echo ServerSignature Off | sudo tee -a /etc/apache2/apache2.conf
+fi
+
+if grep -Fxq "ServerTokens" /etc/apache2/apache2.conf
+then
+    # code if found
+    sudo sed -i 's/^ServerTokens.*/ServerTokens Prod/' /etc/apache2/apache2.conf
+else
+    # code if not found
+    echo ServerTokens Prod | sudo tee -a /etc/apache2/apache2.conf
+fi
+
+sudo sed -i 's/Options Indexes FollowSymLinks/Options -Indexes +FollowSymLinks/g' /etc/apache2/apache2.conf
 
 sudo apache2ctl configtest
 sudo service apache2 restart
