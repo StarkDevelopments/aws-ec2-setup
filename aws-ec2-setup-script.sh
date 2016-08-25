@@ -11,6 +11,10 @@ echo Set locale to GB
 sudo locale-gen en_GB.UTF-8
 echo LANG="en_GB.UTF-8" | sudo tee /etc/default/locale
 echo LANGUAGE="en_GB:en" | sudo tee -a /etc/default/locale
+
+##Can also run sudo dpkg-reconfigure locales and choose en_GB.UTF-8.
+##Restart after!
+##Run locales to check its set.
 ####################################################
 
 
