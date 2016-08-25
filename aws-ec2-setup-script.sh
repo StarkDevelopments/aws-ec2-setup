@@ -14,6 +14,7 @@ echo LANGUAGE="en_GB:en" | sudo tee -a /etc/default/locale
 
 ##Can also run sudo dpkg-reconfigure locales and choose en_GB.UTF-8.
 #sudo update-locale LANG=en_GB.UTF-8 LANGUAGE="en_GB:en"
+##sudo dpkg-reconfigure tzdata
 ##Restart after!
 ##Run locales to check its set.
 ####################################################
