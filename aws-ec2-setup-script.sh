@@ -35,6 +35,7 @@ sudo apt-get update
 
 ####################################################
 echo Install required packages
+#libapache2-mod-apparmor
 sudo apt-get install -y apache2 apparmor apparmor-utils apparmor-profiles automysqlbackup awscli chkrootkit fail2ban joe libapache2-mod-mono libapache2-mod-security2 logwatch mono-apache-server4 mono-complete mono-devel mono-runtime mono-runtime-common mono-xsp4-base mysql-client mysql-server mysqltuner mytop ntp postfix s3cmd unattended-upgrades unzip
 ####################################################
 
@@ -72,6 +73,8 @@ sudo sed -i 's/^LoginGraceTime.*/LoginGraceTime 60/' /etc/ssh/sshd_config
 echo Configure Apparmor
 sudo apparmor_status
 sudo aa-enforce /etc/apparmor.d/*
+
+sudo aa-enforce /etc/apparmor.d/usr.sbin.apache2
 ####################################################
 
 
@@ -94,6 +97,7 @@ sudo a2enmod mod_mono
 sudo a2enmod security2
 sudo a2enmod rewrite
 sudo a2enmod ssl
+sudo a2enmod apparmor
 ####################################################
 
 
